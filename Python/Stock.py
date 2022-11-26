@@ -1,34 +1,34 @@
 import time
 import json
+import requests
+import copy
 
-def getStocks():
-    with open("../Stocks.json", "r") as f:
+def getOldJson():
+    with open("Stocks.json", "r") as f:
         return json.load(f)
 
-def getChange(stock):
+def getNewJson(oldjson):
+    newjson = copy.copy(oldjson)
+    for i in oldjson:
+        newjson[i] = oldjson[i] + 1 #Replce with API code
+    return newjson
 
-    pass
-
-def Buy(change):
-    if change > 0:
-        return True
-    else:
-        return False
+def updateJson(newjson):
+    with open("Stocks.json", "w") as f:
+        json.dump(newjson, f)
 
 def main():
-    while(True):
-        try:
-            stocks = getStocks()
-            for i in stocks:
-                change = getChange(i)
-                if Buy(change):
-                    print(f"Buy Stock {i}")
-                else:
-                    print(f"Sell Stock {i}")
-        
-            time.sleep(7*24*60*60) #Wait 1 week
-        except:
-            print("Failure")
+    oldjson = getOldJson()
+    newjson = getNewJson(oldjson)
+    print(f"Old: {oldjson}")
+    print(f"New: {newjson}")
+    for i in oldjson:
+        if int(newjson[i]) > int(oldjson[i]):
+            print(f"Buy {i}")
+        else:
+            print(f"Don't Buy {i}")
+    updateJson(newjson)
+    pass
 
 if __name__ == "__main__":
     main()
