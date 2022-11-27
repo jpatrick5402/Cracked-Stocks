@@ -4,7 +4,7 @@ import requests
 import copy
 
 def getOldJson():
-    with open("Stocks.json", "r") as f:
+    with open("./Python/Stocks.json", "r") as f:
         return json.load(f)
 
 def getNewJson(oldjson):
