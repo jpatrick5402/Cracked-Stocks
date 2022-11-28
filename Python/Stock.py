@@ -22,7 +22,7 @@ def updateJson(newjson):
 def calculate(oldjson,newjson,stock):
     old = oldjson[stock]
     new = newjson[stock]
-    precent_for_change = .05
+    precent_for_change = .022
     if new > old + (precent_for_change * old):
         return 1
     elif new < old - (precent_for_change * old):
@@ -30,7 +30,7 @@ def calculate(oldjson,newjson,stock):
     else:
         return 2
 
-def invest(result, stock): 
+def invest(result, stock, KEY, PKEY): 
     if result == "BUY":
         pass
     elif result == "SELL":
@@ -39,8 +39,9 @@ def invest(result, stock):
         pass
 
 def main():
-
+    #Mainloop of program
     while(True):
+
         try:
             KEY = os.environ["API_KEY"]
             PKEY = os.environ["PRIVATE_KEY"]
@@ -50,20 +51,26 @@ def main():
 
         oldjson = getOldJson()
         newjson = getNewJson(oldjson, KEY, PKEY)
+
         print(datetime.datetime.now())
+
         print(f"Old: {oldjson}")
         print(f"New: {newjson}")
+
         for i in oldjson:
             answer = calculate(oldjson,newjson,i)
             if answer == 1:
                 print(f"Buy {i}")
+                invest("BUY", i, KEY, PKEY)
             elif answer == 0:
-                print(f"Don't Buy {i}")
+                print(f"Sell {i}")
+                invest("SELL", i, KEY, PKEY)
             elif answer == 2:
                 print(f"Hold {i}")
+                invest("HOLD", i, KEY, PKEY)
 
         updateJson(newjson)
-        time.sleep(7*24*60*60)
+        time.sleep(2*24*60*60)
     
     return 0
 
