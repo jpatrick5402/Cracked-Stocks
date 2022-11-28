@@ -19,11 +19,24 @@ def updateJson(newjson):
     with open("./Stocks.json", "w") as f:
         json.dump(newjson, f)
 
-def Calculate(oldjson,newjson):
-    pass
+def calculate(oldjson,newjson,stock):
+    old = oldjson[stock]
+    new = newjson[stock]
+    precent_for_change = .05
+    if new > old + (precent_for_change * old):
+        return 1
+    elif new < old - (precent_for_change * old):
+        return 0
+    else:
+        return 2
 
-def Invest(stock): 
-    pass
+def invest(result, stock): 
+    if result == "BUY":
+        pass
+    elif result == "SELL":
+        pass
+    elif result == "HOLD":
+        pass
 
 def main():
 
@@ -41,10 +54,14 @@ def main():
         print(f"Old: {oldjson}")
         print(f"New: {newjson}")
         for i in oldjson:
-            if newjson[i] > oldjson[i] + 2:
+            answer = calculate(oldjson,newjson,i)
+            if answer == 1:
                 print(f"Buy {i}")
-            else:
+            elif answer == 0:
                 print(f"Don't Buy {i}")
+            elif answer == 2:
+                print(f"Hold {i}")
+
         updateJson(newjson)
         time.sleep(7*24*60*60)
     
