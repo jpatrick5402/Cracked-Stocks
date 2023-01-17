@@ -70,7 +70,7 @@ def main():
                 invest("HOLD", i, KEY, PKEY)
 
         updateJson(newjson)
-        time.sleep(2*24*60*60)
+        time.sleep(3*24*60*60)
     
     return 0
 
