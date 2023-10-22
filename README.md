@@ -1,5 +1,5 @@
 # CrackedStocks
 
-This Program is used to automatically Invest money using Alpaca API
+This program is no longer receiving updates
 
-It is written in C++ and Python in order to highlight differences between the two languages
+This project is no longer going to receive updates as the process goes against terms of service for a majority of the Investing APIs
